@@ -124,42 +124,39 @@
     }
   </style>
 
-<div class="chat-wrapper">
-  <div class="chat-container" id="chatBox">
-		<% for(sm of allMessages){ %>
-			<% if(sm.sender.equals(currUser)){ %>
-  			<div class="message sent"><%= sm.msg %> &nbsp; 
-           <% if(currUser) { %>
-										<form action="/inbox/<%= sm._id %>?_method=DELETE" class="message-delete" method="post">
-											<button 
-                      type="submit" 
-                      class="btn btn-secondary delete-button" 
-                      data-bs-container="body" 
-                      data-bs-toggle="popover" 
-                      data-bs-placement="bottom" 
-                      data-bs-content="Delete"
-                      ><i class="fa-solid fa-ellipsis-vertical delete-btn"></i></button>
-										</form>
-						<% } %>
-          <br>
-					<span class="ms-time-date">
-						<%= sm.sender.username %>&nbsp;&nbsp;&nbsp;
-						<%= new Date(sm.createdAt).toLocaleString() %>
-					</span>
-				</div>
-			<% } else {%>
-  			<div class="message received"><%= sm.msg %> <br>
-					<span class="ms-time-date">
-						<%= sm.sender.username %>&nbsp;&nbsp;&nbsp;
-						<%= new Date(sm.createdAt).toLocaleString() %>
-					</span>
-				</div>
-						<% } %>
-				<% } %>
+  <div class="chat-wrapper">
+    <div class="chat-container" id="chatBox">
+      <% for(sm of allMessages){ %>
+        <% if(sm.sender.equals(currUser)){ %>
+          <div class="message sent"><%= sm.msg %>
+            <% if(currUser) { %>
+              <form action="/inbox/<%= sm._id %>?_method=DELETE" method="post" class="message-delete">
+                <button type="submit" class="delete-button">
+                  <i class="fa-solid fa-ellipsis-vertical delete-btn"></i>
+                </button>
+              </form>
+            <% } %>
+            <br>
+            <span class="ms-time-date">
+              <%= sm.sender.username %> — <%= new Date(sm.createdAt).toLocaleString() %>
+            </span>
+          </div>
+        <% } else { %>
+          <div class="message received"><%= sm.msg %><br>
+            <span class="ms-time-date">
+              <%= sm.sender.username %> — <%= new Date(sm.createdAt).toLocaleString() %>
+            </span>
+          </div>
+        <% } %>
+      <% } %>
+    </div>
+  
+    <!-- ✅ Moved outside for better fixed positioning -->
     <div class="input-container">
-		<form action="/inbox" method="POST" novalidate class="needs-validation message-form">
-					<input type="text" name="msg"  class="form-control message-inp" required>
-					<button ><i class="fa-solid fa-circle-chevron-right"></i></button>
-		</form>
+      <form id="message-form" class="message-form">
+        <input type="text" id="message-input" class="form-control" autocomplete="off" required>
+        <button type="submit"><i class="fa-solid fa-circle-chevron-right"></i></button>
+      </form>
     </div>
   </div>
+  
