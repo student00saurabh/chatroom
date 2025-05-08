@@ -1,0 +1,43 @@
+
+<nav class="navbar navbar-expand-md border-bottom sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/ibsa">Chat-Room</a>
+
+    <!-- Toggler for Offcanvas -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+      aria-controls="offcanvasNavbar">
+      <i class="fa-solid fa-gear"></i>
+    </button>
+
+    <!-- Offcanvas Sidebar -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Settings</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+
+      <div class="offcanvas-body">
+          <!-- <div class="navbar-nav mt-2">
+            <a class="nav-link" href="/ibsa"><i class="fa-solid fa-house"></i> Home</a>
+          </div> -->
+
+        <!-- login signup btn -->
+         <div class="navbar-nav ms-auto">
+          <% if(!currUser) { %>
+          <div class="navbar-nav mt-2">
+              <a class="nav-link" href="/signup"> Signup</a>
+          </div>
+          <div class="navbar-nav mt-2">
+              <a class="nav-link" href="/login"> Login</a>
+          </div>
+          <% } %>
+           <% if(currUser) { %>
+          <div class="navbar-nav mt-2">
+              <a class="nav-link " href="/logout"> Logout</a>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

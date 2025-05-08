@@ -1,0 +1,146 @@
+<% layout("/layouts/boilerplate") -%>
+
+<style>
+
+  .auth-box {
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
+    padding: 40px 30px;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+
+  h1 {
+    text-align: center;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 30px;
+  }
+
+  .form-label {
+    font-weight: 500;
+    color: #333;
+  }
+
+  .form-control {
+    border-radius: 12px;
+    padding: 10px 15px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+
+  .form-control:focus {
+    border-color: #A18D5E;
+    box-shadow: 0 0 0 0.1rem rgba(161, 141, 94, 0.25);
+  }
+
+  .btn-outline-primary {
+    width: 100%;
+    padding: 10px;
+    border-radius: 25px;
+    background-color: #5E72A1;
+    border: none;
+    color: #fff;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-outline-primary:hover {
+    background-color: #394166;
+  }
+
+  .valid-feedback {
+    font-size: 12px;
+    color: #6c757d;
+    margin-top: 3px;
+  }
+
+  @media (max-width: 768px) {
+    .auth-box {
+      margin: 20px;
+    }
+  }
+</style>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+      <h1>SignUp on Chat-Room</h1>
+      <div class="auth-box mt-3">
+        <form action="/signup" method="POST" class="needs-validation" novalidate>
+          <!-- Username -->
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="form-control"
+              required>
+            <div class="valid-feedback">
+              Do not use spaces, it should be unique!
+            </div>
+          </div>
+
+          <!-- Name -->
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              class="form-control"
+              required>
+            <div class="valid-feedback">
+              Sweet name!
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-control"
+              required>
+            <div class="valid-feedback">
+              Please recheck the email. Is it correct?
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-control"
+              required>
+            <div class="valid-feedback">
+              Make a strong password!
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-outline-primary">Signup</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<footer><hr>
+	<div class="f-info">
+		<div class="f-info-socials">
+           <i class="fa-brands fa-square-facebook"></i>
+		   <i class="fa-brands fa-square-instagram"></i>
+		   <i class="fa-brands fa-linkedin"></i>
+		</div>
+		<div class="f-info-brand"><span class="copyright">&copy;</span> Friend-Zone Private Limited</div>
+	</div>
+</footer>

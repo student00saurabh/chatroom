@@ -1,0 +1,100 @@
+body{
+	background-color: #fff !important;
+	 font-family: "Plus Jakarta Sans", serif !important;
+	 display: flex;
+	 flex-direction: column;
+	 min-height: 100vh;
+	 color: #222 !important;
+}
+input{
+  border: 2px solid #666 !important;
+}
+.container{
+	flex: 1;
+}
+
+.navbar{
+	height: 5rem;
+	background-color: #5E72A1;
+}
+.fa-spa{ 
+	color: #5E72A1;
+	font-size: 2rem;
+}
+.nav-link{
+	color: white !important;
+	transition-duration: 0.8s !important;
+	padding: 3px 10px 3px 10px !important;
+}
+.nav-link:hover{
+	border: 2px solid #fff !important;
+	border-radius: 2rem;
+}
+.navbar-toggler {
+  background-color: #5E72A1 !important; /* Your custom color */
+  border-radius: 5px;
+}
+.custom-dropdown-bg {
+  background-color: #004466 !important; /* Replace with your own color */
+  padding: 1rem;
+  border-radius: 0 0 10px 10px; /* optional: rounded corners */
+}
+/* footer */
+.f-info-links a{
+	text-decoration: none;
+	color: white;
+	vertical-align: middle;
+}
+.f-info-links a:hover{
+	text-decoration: underline;
+}
+.f-info-links, .f-info-socials, .f-info-brand{
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.f-info-socials i{
+	font-size: 1.2rem;
+	color: #004466;
+	margin-right: 1rem;
+}
+.f-info{
+	text-align: center;
+	height: 8rem;
+	background-color: #5E72A1;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: space-evenly;
+}
+.offcanvas{
+	background-color: #5E72A1 !important;
+}
+.copyright{
+	color: #004466;
+}
+
+/* home page */
+
+ /* message */
+.message-form{
+	 position: fixed ;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    z-index: 1000;
+}
+.message-inp{
+	border: 2px solid #5E72A1 !important;
+}
+.ms-time-date{
+	text-align: right;
+	float: right !important;
+	font-size: 0.5rem;
+	color:black;
+}

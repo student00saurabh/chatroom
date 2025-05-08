@@ -1,0 +1,118 @@
+<% layout("/layouts/boilerplate") -%>
+
+<style>
+
+  .auth-box {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px 30px;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  h1 {
+    text-align: center;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 30px;
+  }
+
+  .form-label {
+    font-weight: 500;
+    color: #333;
+  }
+
+  .form-control {
+    border-radius: 12px;
+    padding: 10px 15px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+
+  .form-control:focus {
+    border-color: #5E72A1;
+    box-shadow: 0 0 0 0.1rem rgba(94, 114, 161, 0.25);
+  }
+
+  .btn-outline-primary {
+    width: 100%;
+    padding: 10px;
+    border-radius: 25px;
+    transition: background 0.3s ease;
+    font-weight: 500;
+  }
+
+  .btn-outline-primary:hover {
+    background-color: #5E72A1;
+    color: #fff;
+    border-color: #5E72A1;
+  }
+
+  .signup-link {
+    margin-top: 15px;
+    text-align: center;
+    color: #555;
+  }
+
+  .signup-link a {
+    color: #5E72A1;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .signup-link a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+      <h1>Login</h1>
+      <div class="auth-box mt-3">
+        <form action="/login" method="POST" class="needs-validation" novalidate>
+          <!-- Username -->
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="form-control"
+              required />
+          </div>
+
+          <!-- Password -->
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-control"
+              required />
+          </div>
+
+          <button type="submit" class="btn btn-outline-primary">Login</button>
+        </form>
+
+        <div class="signup-link">
+          <p>Don't have an account? <a href="/signup">Signup here</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer><hr>
+	<div class="f-info">
+		<div class="f-info-socials">
+           <i class="fa-brands fa-square-facebook"></i>
+		   <i class="fa-brands fa-square-instagram"></i>
+		   <i class="fa-brands fa-linkedin"></i>
+		</div>
+		<div class="f-info-brand"><span class="copyright">&copy;</span> Friend-Zone Private Limited</div>
+	</div>
+</footer>
