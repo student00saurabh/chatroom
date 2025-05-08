@@ -4,6 +4,8 @@ if (process.env.NODE_ENV != "production") {
 
 const express = require("express");
 const app = express();
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
 const path = require("path");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
@@ -92,6 +94,14 @@ app.get("/", (req, res) => {
 app.use("/inbox", messageRouter);
 app.use("/", userRouter);
 
+io.on("connection", (socket) => {
+  console.log("🟢 A user connected");
+
+  socket.on("chat message", (msg) => {
+    io.emit("chat message", msg); // broadcast to all users
+  });
+});
+
 //error checker
 // app.use((req, res, next) => {
 //   console.log("Incoming request:", req.method, req.path);
@@ -107,6 +117,11 @@ app.use((err, req, res, next) => {
   res.render("error.ejs", { message });
 });
 
-app.listen(8080, () => {
-  console.log(`Chat-Room is working at ${8080}`);
+// app.listen(8080, () => {
+//   console.log(`Chat-Room is working at ${8080}`);
+// });
+
+const PORT = process.env.PORT || 3000;
+http.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });
