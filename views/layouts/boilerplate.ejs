@@ -15,7 +15,6 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
-
 </head>
 <body>
 	<%- include("../includes/navbar.ejs") -%>
@@ -27,34 +26,3 @@
 	<script src="/js/script.js"></script>
 </body>
 </html>
-
-<script src="/socket.io/socket.io.js"></script>
-<script>
-  const socket = io();
-
-  const form = document.getElementById('message-form');
-  const input = document.getElementById('message-input');
-  const chatBox = document.getElementById('chatBox');
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const msg = input.value.trim();
-    if (msg) {
-      socket.emit('chat message', msg);
-      addMessage(msg, 'sent', 'You');
-      input.value = '';
-    }
-  });
-
-  socket.on('chat message', (data) => {
-    addMessage(data.msg, 'received', data.sender);
-  });
-
- function addMessage(message, type, sender) {
-    const msgDiv = document.createElement('div');
-    msgDiv.className = `message ${type}`;
-    msgDiv.innerHTML = `${message}<br><span class="ms-time-date">${sender} — ${new Date().toLocaleString()}</span>`;
-    chatBox.appendChild(msgDiv);
-    chatBox.scrollTop = chatBox.scrollHeight;
-  } 
-</script>
