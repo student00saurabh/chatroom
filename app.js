@@ -2,8 +2,14 @@ if (process.env.NODE_ENV != "production") {
   require("dotenv").config();
 }
 
+const http = require("http");
 const express = require("express");
+const { Server } = require("socket.io");
+
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+
 const path = require("path");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
@@ -15,6 +21,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
+const Message = require("./models/message.js");
 
 const messageRouter = require("./routes/message.js");
 const userRouter = require("./routes/user.js");
@@ -89,8 +96,34 @@ app.get("/", (req, res) => {
   }
 });
 
-app.use("/inbox", messageRouter);
 app.use("/", userRouter);
+app.use("/inbox", messageRouter);
+// Socket.IO Logic
+io.on("connection", (socket) => {
+  console.log("User connected:", socket.id);
+
+  // Optional: Load previous messages
+  Message.find()
+    .sort({ createdAt: 1 })
+    .populate("sender")
+    .then((messages) => {
+      socket.emit("previous messages", messages);
+    });
+
+  socket.on("chat message", async (msg) => {
+    // Save to DB
+    const newMessage = new Message({ msg: msg });
+    newMessage.sender = req.user;
+    await newMsg.save();
+
+    // Broadcast to all clients
+    io.emit("chat message", msg);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected:", socket.id);
+  });
+});
 
 //error checker
 // app.use((req, res, next) => {
@@ -107,6 +140,8 @@ app.use((err, req, res, next) => {
   res.render("error.ejs", { message });
 });
 
-app.listen(8080, () => {
-  console.log(`Chat-Room is working at ${8080}`);
+// Start Server
+const PORT = 8080;
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });
