@@ -30,7 +30,7 @@
     socket.on("previous messages", (msgs) => {
       msgs.forEach((msg) => {
         const li = document.createElement("li");
-        li.textContent = msg.content;
+        li.textContent = msg.msg;
         messages.appendChild(li);
       });
     });
