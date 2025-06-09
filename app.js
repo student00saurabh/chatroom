@@ -106,8 +106,8 @@ io.on("connection", (socket) => {
   Message.find()
     .sort({ createdAt: 1 })
     .populate("sender")
-    .then((messages) => {
-      socket.emit("previous messages", messages);
+    .then((msgs) => {
+      socket.emit("previous messages", msgs);
     });
 
   socket.on("chat message", async (msg) => {
