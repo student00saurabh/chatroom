@@ -168,3 +168,36 @@
     chatBox.scrollTop = chatBox.scrollHeight;
   </script>
   
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+  
+    const form = document.getElementById("form");
+    const input = document.getElementById("input");
+    const messages = document.getElementById("messages");
+  
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (input.value) {
+        socket.emit("chat message", input.value);
+        input.value = "";
+      }
+    });
+  
+    // Load previous messages
+    socket.on("previous messages", (msgs) => {
+      msgs.forEach((msg) => {
+        const li = document.createElement("li");
+        li.textContent = msg.content;
+        messages.appendChild(li);
+      });
+    });
+  
+    // Listen for new message
+    socket.on("chat message", function (msg) {
+      const li = document.createElement("li");
+      li.textContent = msg;
+      messages.appendChild(li);
+    });
+  </script>
+  
