@@ -3,7 +3,7 @@
   <style>
     .message-container{
       width: 100%;
-      display: flow-root;
+      display: flow-root !important;
     }
     p{
       width: fit-content;
@@ -81,11 +81,12 @@
     const form = document.getElementById("form");
     const input = document.getElementById("input");
     const showmsg = document.getElementById("messages");
-    const div = document.querySelector(".message-container");
   
     // ✅ Handle new message
     socket.on("chat message", (msg, user) => {
-      if(user.username == socket.handshake.session.passport.user){
+      if(user){
+        const div = document.createElement("div")
+      div.classList = "message-container"
       const li = document.createElement("p");
       li.classList = "mesender"
       li.textContent = msg;
@@ -99,10 +100,12 @@
         minute: '2-digit',
         hour12: true })}`
         li.appendChild(span);
+        div.appendChild(li)
       showmsg.appendChild(div);
-      div.appendChild(li)
       }else{
-        const li = document.createElement("p");
+        const div = document.createElement("div")
+      div.classList = "message-container"
+      const li = document.createElement("p");
       li.classList = "anothersender"
       li.textContent = msg;
       const span = document.createElement("span");
@@ -115,9 +118,10 @@
         minute: '2-digit',
         hour12: true })}`
         li.appendChild(span);
+        div.appendChild(li)
       showmsg.appendChild(div);
-      div.appendChild(li)
       }
+      
     })
   
     // ✅ Send message
