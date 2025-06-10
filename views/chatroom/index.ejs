@@ -1,42 +1,113 @@
 <% layout("/layouts/boilerplate") -%>
   <script src="/socket.io/socket.io.js"></script>
   <style>
-    .message-container{
-      width: 100%;
-      display: flow-root !important;
+    .container {
+      flex: 1;
+      background: linear-gradient(145deg, #f4f6fc, #dee3f0);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+      animation: fadeInContainer 0.7s ease-in-out;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
     }
-    p{
-      width: fit-content;
-      max-width: 600px !important;
-      padding: 3px 5px 3px 10px;
-      margin: 5px;
-      height: fit-content;
-      display: grid;
+    
+    /* Optional fade-in animation */
+    @keyframes fadeInContainer {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
-    .mesender{
-      background-color: #5E72A1;
-      float: right;
-      border-radius: 10px 10px 0px 10px;
-    }
-    .anothersender{
-      background-color: #a1885e;
-      float: left;
-      border-radius: 10px 10px 10px 0px;
-    }
-    span{
-      display: block;
-      text-align: right;
-	    float: right !important;
-	    font-size: 0.5rem;
-	    color: white;
-    }
+    
+    .message-scroller {
+  height: 420px;
+  overflow-y: auto;
+  background: linear-gradient(135deg, #f8f9fa, #e0e7ff);
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  scrollbar-width: thin;
+  scrollbar-color: #5E72A1 #d1d1d1;
+}
+
+/* Custom scrollbar for Webkit (Chrome, Edge, Safari) */
+.message-scroller::-webkit-scrollbar {
+  width: 6px;
+}
+.message-scroller::-webkit-scrollbar-track {
+  background: #eee;
+}
+.message-scroller::-webkit-scrollbar-thumb {
+  background-color: #5E72A1;
+  border-radius: 6px;
+}
+
+.message-container {
+  display: flow-root;
+  margin-bottom: 8px;
+}
+
+p {
+  width: fit-content;
+  max-width: 85%;
+  padding: 10px 16px;
+  margin: 8px 0;
+  font-size: 0.95rem;
+  position: relative;
+  word-wrap: break-word;
+  line-height: 1.5;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+}
+
+/* Your message */
+.mesender {
+  background: linear-gradient(135deg, #5E72A1, #7582bf);
+  color: #fff;
+  float: right;
+  border-bottom-right-radius: 4px;
+  animation: slideInRight 0.3s ease;
+}
+
+/* Others' messages */
+.anothersender {
+  background: linear-gradient(135deg, #a1885e, #c6a86e);
+  color: #fff;
+  float: left;
+  border-bottom-left-radius: 4px;
+  animation: slideInLeft 0.3s ease;
+}
+
+/* Timestamp and username */
+span {
+  display: block;
+  text-align: right;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 5px;
+  font-style: italic;
+}
+
+/* Animations */
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
   </style>
 </head>
 <body>
   <div class="container">
     <div class="row">
-      <div class="col-12 col-md-6 offset-md-3 mt-4 mb-4 message-scroller">
-        <div id="messages" class="mb-20" style="margin-bottom: 70px !important;">
+      <div class="col-12 col-md-6 offset-md-3 mt-4 mb-4">
+        <div id="messages" class=" message-scroller" >
           <% for(message of messages){ %>
             <% if(message.sender.equals(currUser)){ %>
               <div class="message-container">
@@ -67,10 +138,10 @@
              <% } %>
             <% } %>
           </div>
-        <form id="form" class="needs-validation d-flex message-form col-12 col-md-6 offset-md-3">
-          <input id="input" autocomplete="off" placeholder="Type message..." class="message-inp form-control"/>
-          <button class="btn btn-sm btn-outline-primary">Send</button>
-        </form>
+          <form id="form" class="needs-validation d-flex message-form ">
+            <input id="input" autocomplete="off" placeholder="Type message..." class="message-inp form-control"/>
+            <button><i class="fa-solid fa-paper-plane"></i></button>
+          </form>
       </div>
     </div>
   </div>  
@@ -135,5 +206,11 @@
     });
   </script>
   
+  <script>
+  const messageScroller = document.querySelector('.message-scroller');
+  if (messageScroller) {
+    messageScroller.scrollTop = messageScroller.scrollHeight;
+  }
+</script>
 </body>
 </html>

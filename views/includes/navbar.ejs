@@ -21,6 +21,7 @@
             <a class="nav-link" href="/ibsa"><i class="fa-solid fa-house"></i> Home</a>
           </div> -->
 
+
         <!-- login signup btn -->
          <div class="navbar-nav ms-auto">
           <% if(!currUser) { %>
@@ -36,8 +37,30 @@
               <a class="nav-link " href="/logout"> Logout</a>
           </div>
           <% } %>
+          
         </div>
       </div>
     </div>
   </div>
 </nav>
+
+<script>
+  const toggle = document.getElementById("modeToggle");
+  const body = document.body;
+
+  // Load mode from localStorage
+  if (localStorage.getItem("theme") === "dark") {
+    body.classList.add("dark-mode");
+    toggle.checked = true;
+  }
+
+  toggle.addEventListener("change", () => {
+    if (toggle.checked) {
+      body.classList.add("dark-mode");
+      localStorage.setItem("theme", "dark");
+    } else {
+      body.classList.remove("dark-mode");
+      localStorage.setItem("theme", "light");
+    }
+  });
+</script>
