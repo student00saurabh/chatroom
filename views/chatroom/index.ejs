@@ -84,8 +84,8 @@
   
     // ✅ Handle new message
     socket.on("chat message", (msg, user) => {
-      if(user){
-        console.log(user)
+      if(user[0]._id == `<%= currUser._id %>`){
+        
         const div = document.createElement("div")
       div.classList = "message-container"
       const li = document.createElement("p");

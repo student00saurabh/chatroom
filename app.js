@@ -125,9 +125,7 @@ app.use("/inbox", messageRouter);
 // Socket.IO Logic
 io.on("connection", async (socket) => {
   const username = socket.handshake.session.passport.user;
-  console.log(username);
   const user = await User.find({ username: username });
-  console.log(user);
   // console.log(user);
   socket.on("chat message", async (msg) => {
     // Save to DB
