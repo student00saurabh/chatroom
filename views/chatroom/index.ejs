@@ -81,9 +81,11 @@
     const form = document.getElementById("form");
     const input = document.getElementById("input");
     const showmsg = document.getElementById("messages");
+    const div = document.querySelector(".message-container");
   
     // ✅ Handle new message
     socket.on("chat message", (msg, user) => {
+      if(user.username == socket.handshake.session.passport.user){
       const li = document.createElement("p");
       li.classList = "mesender"
       li.textContent = msg;
@@ -97,8 +99,26 @@
         minute: '2-digit',
         hour12: true })}`
         li.appendChild(span);
-      showmsg.appendChild(li);
-    });
+      showmsg.appendChild(div);
+      div.appendChild(li)
+      }else{
+        const li = document.createElement("p");
+      li.classList = "anothersender"
+      li.textContent = msg;
+      const span = document.createElement("span");
+      span.innerHTML = `<i><b style="color: aqua;">${user[0].username}</b></i> &nbsp; ${Date.now().toLocaleString('en-IN', { 
+        timeZone: 'Asia/Kolkata',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true })}`
+        li.appendChild(span);
+      showmsg.appendChild(div);
+      div.appendChild(li)
+      }
+    })
   
     // ✅ Send message
     form.addEventListener("submit", (e) => {
