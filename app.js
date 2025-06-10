@@ -5,6 +5,7 @@ if (process.env.NODE_ENV != "production") {
 const http = require("http");
 const express = require("express");
 const { Server } = require("socket.io");
+const sharedSession = require("express-socket.io-session");
 
 const app = express();
 const server = http.createServer(app);
@@ -88,6 +89,29 @@ app.use((req, res, next) => {
   next();
 });
 
+io.use(
+  sharedSession(
+    session({
+      store,
+      secret: process.env.SECRET,
+      resave: false,
+      saveUninitialized: true,
+      cookie: {
+        expire: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+      },
+    })
+  )
+);
+
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  res.locals.currUser = req.user;
+  next();
+});
+
 app.get("/", (req, res) => {
   if (!res.locals.currUser) {
     res.render("chatroom/home.ejs");
@@ -99,25 +123,18 @@ app.get("/", (req, res) => {
 app.use("/", userRouter);
 app.use("/inbox", messageRouter);
 // Socket.IO Logic
-io.on("connection", (socket) => {
-  console.log("User connected:", socket.id);
-
-  // Optional: Load previous messages
-  Message.find()
-    .sort({ createdAt: 1 })
-    .populate("sender")
-    .then((msgs) => {
-      socket.emit("previous messages", msgs);
-    });
-
+io.on("connection", async (socket) => {
+  const username = socket.handshake.session.passport.user;
+  const user = await User.find({ username: username });
+  // console.log(user);
   socket.on("chat message", async (msg) => {
     // Save to DB
     const newMessage = new Message({ msg: msg });
-    newMessage.sender = req.user;
-    await newMsg.save();
+    newMessage.sender = user[0];
+    await newMessage.save();
 
     // Broadcast to all clients
-    io.emit("chat message", msg);
+    io.emit("chat message", msg, user);
   });
 
   socket.on("disconnect", () => {

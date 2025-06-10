@@ -91,10 +91,11 @@ input{
 }
 .message-inp{
 	border: 2px solid #5E72A1 !important;
+	width: 100%;
 }
 .ms-time-date{
 	text-align: right;
 	float: right !important;
 	font-size: 0.5rem;
-	color:black;
+	color: white;
 }
